@@ -4,9 +4,7 @@
 <format> -> APA | MLA
 <source> -> source book <book_data> | source magazine <magazine_newspaper_data> | source newspaper <magazine_newspaper_data> | source website <website_data> | source journal <journal_data>
 <book_data> -> <book_data> <book_data> | <author_name> | <year> | <book_title> | <city_publication> | <publisher>
-<author_name> -> <author_first_name> <author_last_name>
-<author_first_name> -> author <string>
-<author_last_name> -> <author_last_name> <author_last_name> | <string>
+<author_name> -> author <string>
 <year> -> year (0-9)(0-9)(0-9)(0-9)
 <book_title> -> title <string>
 <string> -> (0-9, A-Z)*

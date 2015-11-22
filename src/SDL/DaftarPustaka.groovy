@@ -6,15 +6,12 @@ import Model.Journal
 import Model.Magazine
 import Model.Newspaper
 import Model.Website
-import org.codehaus.groovy.ant.Groovy
-
-import java.nio.Buffer
 
 /**
  * Created by timothy.pratama on 22-Nov-15.
  */
 class DaftarPustaka {
-    private Author author = new Author();
+    private ArrayList<Author> authors = new ArrayList<>();
     private Book book = new Book();
     private Journal journal = new Journal();
     private Magazine magazine = new Magazine();
@@ -24,10 +21,12 @@ class DaftarPustaka {
     /* user preference */
     private String action = "none";
     private String format = "none";
+    private String source = "none";
 
     /* list of terminals */
     private ArrayList<String> allowedActions = new ArrayList<>();
     private ArrayList<String> allowedFormat = new ArrayList<>();
+    private ArrayList<String> allowedSource = new ArrayList<>();
 
     /* list for syntax errors */
     Set<String> errorMessages = new HashSet<>();
@@ -35,6 +34,7 @@ class DaftarPustaka {
     public DaftarPustaka() {
         addAllowedActions();
         addAllowedFormats();
+        addAllowedSources()
     }
 
     private void addAllowedActions() {
@@ -46,6 +46,15 @@ class DaftarPustaka {
     private void addAllowedFormats() {
         allowedFormat.add("apa");
         allowedFormat.add("mla");
+    }
+
+    private void addAllowedSources()
+    {
+        allowedSource.add("book");
+        allowedSource.add("magazine");
+        allowedSource.add("newspaper");
+        allowedSource.add("website");
+        allowedSource.add("journal");
     }
 
     Author getAuthor() {
@@ -109,22 +118,22 @@ class DaftarPustaka {
             if (allowedActions.contains(action)) {
                 this.action = action;
             } else {
-                errorMessages.add("Undefined action");
+                errorMessages.add("Unknown action " + action);
             }
         } else {
-            errorMessages.add("Action already set");
+            errorMessages.add("Action has already been set");
         }
     }
 
     def format(String format) {
         if (action.equalsIgnoreCase("get")) {
             if (!this.format.equalsIgnoreCase("none")) {
-                errorMessages.add("Format already set");
+                errorMessages.add("Format has already been set");
             } else {
                 if (allowedFormat.contains(format)) {
                     this.format = format;
                 } else {
-                    errorMessages.add("Unknown bibliography format");
+                    errorMessages.add("Unknown bibliography format " + format);
                 }
             }
         } else {
@@ -132,9 +141,22 @@ class DaftarPustaka {
         }
     }
 
+    def source(String source)
+    {
+        if(this.source.equalsIgnoreCase("none")){
+            if(allowedSource.contains(source)){
+                this.source = source;
+            } else {
+                errorMessages.add("Unknown source " + source);
+            }
+        } else {
+            errorMessages.add("Source has already been set")
+        }
+    }
+
     def getgetSQL() {
         if (errorMessages.size() > 0) {
-            System.out.println("Fail generating SQL Query. Found syntax error(s): ");
+            System.out.println("Fail generating SQL Query. Found " + errorMessages.size() + " syntax error(s): ");
             int i = 1;
             for (String error : errorMessages) {
                 System.out.printf("%d. %s\n", i, error);
@@ -147,10 +169,9 @@ class DaftarPustaka {
 
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "geet"
-            action "noo"
-            format "apa"
+            action "get"
             format "mla"
+            source "website"
             getSQL
         }
     }
