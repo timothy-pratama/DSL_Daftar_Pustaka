@@ -2,6 +2,7 @@ package DSL
 
 import Model.Author
 import Model.Book
+import Model.Date
 import Model.Journal
 import Model.Magazine
 import Model.Newspaper
@@ -29,6 +30,11 @@ class DaftarPustaka {
     private String periodical_title = "none";
     private int volume_number = -1;
     private String inclusive_page = "none";
+    private Date published_date = new Date();
+    private Date accessed_date = new Date();
+    private String web_title = "none";
+    private String article_title = "none";
+    private String journal_title = "none";
 
     /* list of terminals */
     private ArrayList<String> allowedActions = new ArrayList<>();
@@ -226,6 +232,54 @@ class DaftarPustaka {
         }
     }
 
+    def published_date(String tanggals){
+        String[] tanggal = tanggals.split(" ");
+        int day = Integer.valueOf(tanggal[0]);
+        int month = Integer.valueOf(tanggal[1]);
+        int year = Integer.valueOf(tanggal[2]);
+        if(this.published_date.getDay() == 0){
+            this.published_date = new Date(day, month, year);
+        } else {
+            errorMessages.add("Published Date has already been set");
+        }
+    }
+
+    def accessed_date(String tanggals){
+        String[] tanggal = tanggals.split(" ");
+        int day = Integer.valueOf(tanggal[0]);
+        int month = Integer.valueOf(tanggal[1]);
+        int year = Integer.valueOf(tanggal[2]);
+        if(this.accessed_date.getDay() == 0){
+            this.accessed_date = new Date(day, month, year);
+        } else {
+            errorMessages.add("Accessed Date has already been set");
+        }
+    }
+
+    def web_title(String title){
+        if(web_title.equalsIgnoreCase("none")){
+            this.web_title = title;
+        } else {
+            errorMessages.add("Web Title has already been set");
+        }
+    }
+
+    def article_title(String title){
+        if(article_title.equalsIgnoreCase("none")){
+            this.article_title = title;
+        } else {
+            errorMessages.add("Article Title has already been set");
+        }
+    }
+
+    def journal_title(String title){
+        if(journal_title.equalsIgnoreCase("none")){
+            this.journal_title = title;
+        } else {
+            errorMessages.add("Journal Title has already been set");
+        }
+    }
+
     def getgetSQL() {
         if (errorMessages.size() > 0) {
             System.out.println("Fail generating SQL Query. Found " + errorMessages.size() + " syntax error(s): ");
@@ -251,6 +305,11 @@ class DaftarPustaka {
             inclusive_page "1"
             periodical_title "gates of babylonia"
             volume_number 10
+            web_title "Information Retrieval"
+            article_title "The Lost One's Weeping"
+            journal_title "Indonesia Pusaka"
+            accessed_date "1 1 2012"
+            published_date "1 2 2015"
             getSQL
         }
     }
