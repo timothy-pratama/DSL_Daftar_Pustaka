@@ -25,6 +25,10 @@ class DaftarPustaka {
     private int year = 0;
     private String title = "none";
     private String city = "none";
+    private String publisher = "none";
+    private String periodical_title = "none";
+    private int volume_number = -1;
+    private String inclusive_page = "none";
 
     /* list of terminals */
     private ArrayList<String> allowedActions = new ArrayList<>();
@@ -190,6 +194,38 @@ class DaftarPustaka {
         }
     }
 
+    def publisher(String publisher){
+        if(this.publisher.equalsIgnoreCase("none")){
+            this.publisher = publisher;
+        } else {
+            errorMessages.add("Publisher has already been set");
+        }
+    }
+
+    def periodical_title(String title){
+        if(this.periodical_title.equalsIgnoreCase("none")){
+            periodical_title = title;
+        } else {
+            errorMessages.add("Periodical Title has already been set");
+        }
+    }
+
+    def volume_number(int number){
+        if(volume_number == -1){
+            volume_number = number;
+        } else {
+            errorMessages.add("Volume number has already been set");
+        }
+    }
+
+    def inclusive_page(String inclusive_page){
+        if(this.inclusive_page.equalsIgnoreCase("none")){
+            this.inclusive_page = inclusive_page;
+        } else {
+            errorMessages.add("Inclusive page has already been set");
+        }
+    }
+
     def getgetSQL() {
         if (errorMessages.size() > 0) {
             System.out.println("Fail generating SQL Query. Found " + errorMessages.size() + " syntax error(s): ");
@@ -211,6 +247,10 @@ class DaftarPustaka {
             author "Bambang Pamungkas"
             year 2005
             title "geje"
+            publisher "honda"
+            inclusive_page "1"
+            periodical_title "gates of babylonia"
+            volume_number 10
             getSQL
         }
     }
