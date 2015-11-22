@@ -1,0 +1,25 @@
+<sentence> -> <sentence> <sentence> | begin <body> end
+<body> -> <command> <source>
+<command> -> create | read <format> | delete
+<format> -> APA | IEEE | MLA
+<source> -> book <book_data> | magazine <magazine_newspaper_data> | newspaper <magazine_newspaper_data> | website <website_data> | journal <journal_data>
+<book_data> -> <book_data> <book_data> | <author_name> | <year> | <book_title> | <city_publication> | <publisher>
+<author_name> -> <author_name> <author_name> | author <string>
+<year> -> year (0-9)(0-9)(0-9)(0-9)
+<book_title> -> title <string>
+<string> -> (0-9, A-Z)*
+<city_publication> -> city <string>
+<publisher> -> publisher <string>
+<magazine_newspaper_data> -> <magazine_newspaper_data> <magazine_newspaper_data> | <author_name> | <year> | <title> | <periodical_title> | <volume_number> | <inclusive_page>
+<periodical_title> -> periodical title <string>
+<volume_number> -> volume <integer>
+<inclusive_page> -> page <string>
+<integer> -> (0-9)*
+<website_data> -> <website_data> <website_data> | <author_name> | <website_title> | <article_title> | <publisher> | <date> | <date>
+<website_title> -> web title <string>
+<article_title> -> article title <string> 
+<date> -> <day> <month> <year>
+<day> -> (0-3)(0-9)
+<month> -> (0-1)(0-9)
+<jurnal_data> -> <jurnal_data> <jurnal_data> | <author_name> | <article_title> | <journal_title> | <volume_number> | <issue_number> | <year> | <inclusice_page> | Print
+<journal_title> -> jurnal title <string>
