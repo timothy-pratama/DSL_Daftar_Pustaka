@@ -18,10 +18,13 @@ class DaftarPustaka {
     private Newspaper newspaper = new Newspaper();
     private Website website = new Website();
 
-    /* user preference */
+    /* user input */
     private String action = "none";
     private String format = "none";
     private String source = "none";
+    private int year = 0;
+    private String title = "none";
+    private String city = "none";
 
     /* list of terminals */
     private ArrayList<String> allowedActions = new ArrayList<>();
@@ -154,6 +157,39 @@ class DaftarPustaka {
         }
     }
 
+    def methodMissing(String argumentName, args){
+        errorMessages.add("Unknown syntax " + argumentName + " " + args);
+    }
+
+    def author(String name)
+    {
+        authors.add(new Author(name));
+    }
+
+    def year(int year) {
+        if(this.year == 0) {
+            this.year = year;
+        } else {
+            errorMessages.add("Year has already been set");
+        }
+    }
+
+    def title(String title){
+        if(this.title.equalsIgnoreCase("none")){
+            this.title = title;
+        } else {
+            errorMessages.add("Title has already been set");
+        }
+    }
+
+    def city(String city){
+        if(this.city.equalsIgnoreCase("none")){
+            this.city = city;
+        } else {
+            errorMessages.add("City has already been set");
+        }
+    }
+
     def getgetSQL() {
         if (errorMessages.size() > 0) {
             System.out.println("Fail generating SQL Query. Found " + errorMessages.size() + " syntax error(s): ");
@@ -167,23 +203,14 @@ class DaftarPustaka {
         }
     }
 
-    def methodMissing(String argumentName, args){
-        errorMessages.add("Unknown syntax " + argumentName + " " + args);
-    }
-
-    def author(String name)
-    {
-        authors.add(new Author(name));
-        System.out.println(authors.get(0).getFirstName());
-        System.out.println(authors.get(0).getLastName());
-    }
-
     public static void main(String[] args) {
         DaftarPustaka.make {
             action "get"
             format "mla"
             source "website"
             author "Bambang Pamungkas"
+            year 2005
+            title "geje"
             getSQL
         }
     }
