@@ -57,12 +57,12 @@ class DaftarPustaka {
         allowedSource.add("journal");
     }
 
-    Author getAuthor() {
-        return author
+    ArrayList<Author> getAuthors() {
+        return authors
     }
 
-    void setAuthor(Author author) {
-        this.author = author
+    void setAuthors(ArrayList<Author> authors) {
+        this.authors = authors
     }
 
     Book getBook() {
@@ -167,11 +167,23 @@ class DaftarPustaka {
         }
     }
 
+    def methodMissing(String argumentName, args){
+        errorMessages.add("Unknown syntax " + argumentName + " " + args);
+    }
+
+    def author(String name)
+    {
+        authors.add(new Author(name));
+        System.out.println(authors.get(0).getFirstName());
+        System.out.println(authors.get(0).getLastName());
+    }
+
     public static void main(String[] args) {
         DaftarPustaka.make {
             action "get"
             format "mla"
             source "website"
+            author "Bambang Pamungkas"
             getSQL
         }
     }
