@@ -1,8 +1,8 @@
-<daftar_pustaka> -> | begin <body> end
-<body> -> <command> <source>
-<command> -> create | read <format> | delete
-<format> -> APA | IEEE | MLA
-<source> -> book <book_data> | magazine <magazine_newspaper_data> | newspaper <magazine_newspaper_data> | website <website_data> | journal <journal_data>
+<daftar_pustaka> -> | DaftarPustaka.make{ <body> }
+<body> -> <action> <source>
+<action> -> action add | action get <format> | action delete
+<format> -> APA | MLA
+<source> -> source book <book_data> | source magazine <magazine_newspaper_data> | source newspaper <magazine_newspaper_data> | source website <website_data> | source journal <journal_data>
 <book_data> -> <book_data> <book_data> | <author_name> | <year> | <book_title> | <city_publication> | <publisher>
 <author_name> -> <author_first_name> <author_last_name>
 <author_first_name> -> author <string>
