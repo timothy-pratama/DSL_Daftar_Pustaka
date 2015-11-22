@@ -1,0 +1,59 @@
+﻿.only-screen { display: none !important; }
+.only-print { display: block !important; }
+
+html { background: none; }
+body { background: none; font: 13px Arial,Helvetica,Verdana,sans-serif; color: #000000; width: 100% !important; }
+
+a:link:after, a:visited:after { content: " ("attr(href)")"; font-size: 9px;  color: #333333; } 
+a[href^="/"]:after { content: " (http://www.sciencebuddies.org" attr(href) ")"; word-wrap: break-word;  color: #333333; }
+a[href^="javascript"]:after { content: ""; }
+a:link, a:visited { text-decoration: none; padding-bottom: 5px; }
+
+a.print-no-url:link:after, a.pi-difficulty:visited:after { content: normal; } 
+a.print-no-url[href^="/"]:after { content: normal; }
+
+#main { margin: 0 0; width: 100%; }
+
+#header-logo-print { margin-bottom: 20px; }
+
+#content { padding: 0 0; min-height: 0; }
+#content #title { padding: 0 0; }
+
+#sponsors a:link:after, a:visited:after { content: ""; } 
+#sponsors a[href^="/"]:after { content: ""; }
+#sponsors .left { float: none; text-align: left; }
+#sponsors .right { float: none; text-align: left; }
+
+#footer { position: relative; padding: 0 0 0 0; color: inherit; font-size: inherit; font-weight: inherit; }
+#footer a { color: inherit; font-size: inherit; font-weight: inherit; }
+#footer .copyright { margin: 0 0; }
+
+.subtab-section { display: block !important; }
+
+#menu-icons { display: none; }
+#menu-icons-share { display: none; }
+
+/* Search */
+
+.search-table { width: auto; }
+.search-result { margin-top: 20px; }
+
+#pi-summary { width: 100%; }
+
+.pi-kit a { display: none; }
+
+div.pi-filters { background: transparent; height: auto; }
+div.pi-difficulty-info { position: static; float: none; margin-top: 10px; }
+a.pi-difficulty:link:after, a.pi-difficulty:visited:after { content: normal; } 
+a.pi-difficulty[href^="/"]:after { content: normal; }
+
+#menu-share { display: none; }
+h1  { width: auto; }
+
+#content.type-activity .subtab-section .content-video { display: none; }
+
+#activity-table-left { width: auto; }
+#activity-table-right  { width: auto; }
+
+div#sponsors { display: none !important; }
+
