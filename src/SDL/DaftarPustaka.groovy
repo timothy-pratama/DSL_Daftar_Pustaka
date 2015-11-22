@@ -281,6 +281,17 @@ class DaftarPustaka {
     }
 
     def getgetSQL() {
+        if(source.equalsIgnoreCase("book")){
+            validateBookSource();
+        } else if(source.equalsIgnoreCase("magazine")){
+            validateMagazineSource();
+        } else if(source.equalsIgnoreCase("newspaper")){
+            validateNewspaperSource();
+        } else if(source.equalsIgnoreCase("website")){
+            validateWebsiteSource();
+        } else {
+            validateJournalSource();
+        }
         if (errorMessages.size() > 0) {
             System.out.println("Fail generating SQL Query. Found " + errorMessages.size() + " syntax error(s): ");
             int i = 1;
@@ -291,6 +302,31 @@ class DaftarPustaka {
         } else {
             System.out.println("No Error Found! Generating SQL Query...");
         }
+    }
+
+    private void validateBookSource()
+    {
+
+    }
+
+    private void validateMagazineSource()
+    {
+
+    }
+
+    private void validateNewspaperSource()
+    {
+
+    }
+
+    private void validateWebsiteSource()
+    {
+
+    }
+
+    private void validateJournalSource()
+    {
+
     }
 
     public static void main(String[] args) {
