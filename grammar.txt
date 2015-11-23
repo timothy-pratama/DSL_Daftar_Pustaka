@@ -25,3 +25,4 @@
 <month> -> (0-1)(0-9)
 <jurnal_data> -> <jurnal_data> <jurnal_data> | <author_name> | <article_title> | <journal_title> | <volume_number> | <issue_number> | <year> | <inclusive_page> | Print
 <journal_title> -> jurnal title <string>
+<issue_number> -> <integer>

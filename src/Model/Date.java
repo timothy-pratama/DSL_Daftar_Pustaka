@@ -43,4 +43,12 @@ public class Date {
     public void setYear(int year) {
         this.year = year;
     }
+
+    public boolean isSet(){
+        if(day == 0 || month == 0 || year == 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
