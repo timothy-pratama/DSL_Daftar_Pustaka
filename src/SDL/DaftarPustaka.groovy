@@ -28,11 +28,12 @@ class DaftarPustaka {
     private String city = "none";
     private String publisher = "none";
     private String periodical_title = "none";
-    private int volume_number = -1;
+    private String volume_number = "none";
+    private String issue_number = "none";
     private String inclusive_page = "none";
     private Date published_date = new Date();
     private Date accessed_date = new Date();
-    private String web_title = "none";
+    private String website_title = "none";
     private String article_title = "none";
     private String journal_title = "none";
 
@@ -70,54 +71,6 @@ class DaftarPustaka {
         allowedSource.add("journal");
     }
 
-    ArrayList<Author> getAuthors() {
-        return authors
-    }
-
-    void setAuthors(ArrayList<Author> authors) {
-        this.authors = authors
-    }
-
-    Book getBook() {
-        return book
-    }
-
-    void setBook(Book book) {
-        this.book = book
-    }
-
-    Journal getJournal() {
-        return journal
-    }
-
-    void setJournal(Journal journal) {
-        this.journal = journal
-    }
-
-    Magazine getMagazine() {
-        return magazine
-    }
-
-    void setMagazine(Magazine magazine) {
-        this.magazine = magazine
-    }
-
-    Newspaper getNewspaper() {
-        return newspaper
-    }
-
-    void setNewspaper(Newspaper newspaper) {
-        this.newspaper = newspaper
-    }
-
-    Website getWebsite() {
-        return website
-    }
-
-    void setWebsite(Website website) {
-        this.website = website
-    }
-
     /* DSL */
 
     def static make(closure) {
@@ -134,14 +87,14 @@ class DaftarPustaka {
                 errorMessages.add("Unknown action " + action);
             }
         } else {
-            errorMessages.add("Action has already been set");
+            errorMessages.add("Action has already been defined");
         }
     }
 
     def format(String format) {
         if (action.equalsIgnoreCase("get")) {
             if (!this.format.equalsIgnoreCase("none")) {
-                errorMessages.add("Format has already been set");
+                errorMessages.add("Format has already been defined");
             } else {
                 if (allowedFormat.contains(format)) {
                     this.format = format;
@@ -163,7 +116,7 @@ class DaftarPustaka {
                 errorMessages.add("Unknown source " + source);
             }
         } else {
-            errorMessages.add("Source has already been set")
+            errorMessages.add("Source has already been defined")
         }
     }
 
@@ -180,7 +133,7 @@ class DaftarPustaka {
         if(this.year == 0) {
             this.year = year;
         } else {
-            errorMessages.add("Year has already been set");
+            errorMessages.add("Year has already been defined");
         }
     }
 
@@ -188,7 +141,7 @@ class DaftarPustaka {
         if(this.title.equalsIgnoreCase("none")){
             this.title = title;
         } else {
-            errorMessages.add("Title has already been set");
+            errorMessages.add("Title has already been defined");
         }
     }
 
@@ -196,7 +149,7 @@ class DaftarPustaka {
         if(this.city.equalsIgnoreCase("none")){
             this.city = city;
         } else {
-            errorMessages.add("City has already been set");
+            errorMessages.add("City has already been defined");
         }
     }
 
@@ -204,7 +157,7 @@ class DaftarPustaka {
         if(this.publisher.equalsIgnoreCase("none")){
             this.publisher = publisher;
         } else {
-            errorMessages.add("Publisher has already been set");
+            errorMessages.add("Publisher has already been defined");
         }
     }
 
@@ -212,15 +165,15 @@ class DaftarPustaka {
         if(this.periodical_title.equalsIgnoreCase("none")){
             periodical_title = title;
         } else {
-            errorMessages.add("Periodical Title has already been set");
+            errorMessages.add("Periodical Title has already been defined");
         }
     }
 
     def volume_number(int number){
-        if(volume_number == -1){
+        if(!volume_number.equalsIgnoreCase("none")){
             volume_number = number;
         } else {
-            errorMessages.add("Volume number has already been set");
+            errorMessages.add("Volume number has already been defined");
         }
     }
 
@@ -228,7 +181,7 @@ class DaftarPustaka {
         if(this.inclusive_page.equalsIgnoreCase("none")){
             this.inclusive_page = inclusive_page;
         } else {
-            errorMessages.add("Inclusive page has already been set");
+            errorMessages.add("Inclusive page has already been defined");
         }
     }
 
@@ -237,10 +190,10 @@ class DaftarPustaka {
         int day = Integer.valueOf(tanggal[0]);
         int month = Integer.valueOf(tanggal[1]);
         int year = Integer.valueOf(tanggal[2]);
-        if(this.published_date.getDay() == 0){
+        if(!this.published_date.isSet()){
             this.published_date = new Date(day, month, year);
         } else {
-            errorMessages.add("Published Date has already been set");
+            errorMessages.add("Published Date has already been defined");
         }
     }
 
@@ -249,18 +202,18 @@ class DaftarPustaka {
         int day = Integer.valueOf(tanggal[0]);
         int month = Integer.valueOf(tanggal[1]);
         int year = Integer.valueOf(tanggal[2]);
-        if(this.accessed_date.getDay() == 0){
+        if(!this.accessed_date.isSet()){
             this.accessed_date = new Date(day, month, year);
         } else {
-            errorMessages.add("Accessed Date has already been set");
+            errorMessages.add("Accessed Date has already been defined");
         }
     }
 
-    def web_title(String title){
-        if(web_title.equalsIgnoreCase("none")){
-            this.web_title = title;
+    def website_title(String title){
+        if(website_title.equalsIgnoreCase("none")){
+            this.website_title = title;
         } else {
-            errorMessages.add("Web Title has already been set");
+            errorMessages.add("Web Title has already been defined");
         }
     }
 
@@ -268,7 +221,7 @@ class DaftarPustaka {
         if(article_title.equalsIgnoreCase("none")){
             this.article_title = title;
         } else {
-            errorMessages.add("Article Title has already been set");
+            errorMessages.add("Article Title has already been defined");
         }
     }
 
@@ -276,11 +229,20 @@ class DaftarPustaka {
         if(journal_title.equalsIgnoreCase("none")){
             this.journal_title = title;
         } else {
-            errorMessages.add("Journal Title has already been set");
+            errorMessages.add("Journal Title has already been defined");
         }
     }
 
-    def getgetSQL() {
+    def issue_number(String issueNumber){
+        if(issue_number.equalsIgnoreCase("none")){
+            this.issue_number = issueNumber;
+        } else {
+            errorMessages.add("Issue number has already been defined");
+        }
+    }
+
+    private void validateSource()
+    {
         if(source.equalsIgnoreCase("book")){
             validateBookSource();
         } else if(source.equalsIgnoreCase("magazine")){
@@ -289,9 +251,31 @@ class DaftarPustaka {
             validateNewspaperSource();
         } else if(source.equalsIgnoreCase("website")){
             validateWebsiteSource();
-        } else {
+        } else if(source.equalsIgnoreCase("journal")) {
             validateJournalSource();
+        } else {
+            errorMessages.add("Source has not been defined");
         }
+    }
+
+    private void validateAction()
+    {
+        if(action.equalsIgnoreCase("none")) {
+            errorMessages.add("Action has not been defined");
+        }
+    }
+
+    private void validateFormat() {
+        if(format.equalsIgnoreCase("none") && action.equalsIgnoreCase("get")) {
+            errorMessages.add("Format has not been defined");
+        }
+    }
+
+    def getgetSQL() {
+        validateSource();
+        validateAction();
+        validateFormat();
+
         if (errorMessages.size() > 0) {
             System.out.println("Fail generating SQL Query. Found " + errorMessages.size() + " syntax error(s): ");
             int i = 1;
@@ -300,52 +284,411 @@ class DaftarPustaka {
                 i++;
             }
         } else {
-            System.out.println("No Error Found! Generating SQL Query...");
+            processSQL();
+        }
+    }
+
+    private void processSQL() {
+        System.out.println("No error found! Generating SQL Query...");
+    }
+
+    private boolean isBookMissingAttributes()
+    {
+        boolean isMissing = true;
+
+        /*
+         * Field to be checked:
+         * private ArrayList<Author> authors = new ArrayList<>();
+         * private int year;
+         * private String title;
+         * private String city;
+         * private String publisher;
+        */
+
+        if(authors.size() > 0) {
+            isMissing = false;
+        }
+        if(year > 0) {
+            isMissing = false;
+        }
+        if(!title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(city.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(publisher.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+
+        return isMissing;
+    }
+
+    private void validateBookAttributes() {
+        /*
+         * Field to be checked:
+         * private ArrayList<Author> authors = new ArrayList<>();
+         * private int year;
+         * private String title;
+         * private String city;
+         * private String publisher;
+        */
+
+        if (authors.size() == 0) {
+            errorMessages.add("Author has not been defined");
+        }
+        if(year == 0) {
+            errorMessages.add("Year has not been defined");
+        }
+        if(title.equalsIgnoreCase("none")) {
+            errorMessages.add("Title has not been defined");
+        }
+        if(city.equalsIgnoreCase("none")) {
+            errorMessages.add("City has not been defined");
+        }
+        if(publisher.equalsIgnoreCase("none")) {
+            errorMessages.add("Publisher has not been defined");
+        }
+    }
+
+    private boolean isJournalMissingAttributes(){
+
+        boolean isMissing = true;
+
+        /* Fields to be checked:
+         * private ArrayList<Author> authors = new ArrayList<>();
+         * private String articleTitle;
+         * private String journalTitle;
+         * private String volumeNumber;
+         * private String issueNumber;
+         * private int year;
+         * private String inclusivePage;
+        */
+
+        if(authors.size()>0) {
+            isMissing = false;
+        }
+        if(!article_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!journal_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!volume_number.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!issue_number.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(year > 0) {
+            isMissing = false;
+        }
+        if(!inclusive_page.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+
+        return isMissing;
+    }
+
+    private void validateJournalAttributes(){
+        /* Fields to be checked:
+         * private ArrayList<Author> authors = new ArrayList<>();
+         * private String articleTitle;
+         * private String journalTitle;
+         * private String volumeNumber;
+         * private String issueNumber;
+         * private int year;
+         * private String inclusivePage;
+        */
+
+        if(authors.size() == 0) {
+            errorMessages.add("Author has not been defined");
+        }
+        if(article_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Article title has not been defined");
+        }
+        if(journal_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Journal title has not been defined");
+        }
+        if(volume_number.equalsIgnoreCase("none")) {
+            errorMessages.add("Volume number has not been defined");
+        }
+        if(issue_number.equalsIgnoreCase("none")) {
+            errorMessages.add("Issue number has not been defined");
+        }
+        if(year == 0) {
+            errorMessages.add("Year has not been defined");
+        }
+        if(inclusive_page.equalsIgnoreCase("none")) {
+            errorMessages.add("Inclusive page has not been defined");
+        }
+    }
+
+    private boolean isMagazineMissingAttributes(){
+        boolean isMissing = true;
+
+        /*Fields to be checked:
+        private ArrayList<Author> authors = new ArrayList<>();
+        private String articleTitle;
+        private String journalTitle;
+        private String volumeNumber;
+        private String issueNumber;
+        private int year;
+        private String inclusivePage;*/
+
+        if(authors.size() > 0) {
+            isMissing = false;
+        }
+        if(!article_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!journal_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!volume_number.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!issue_number.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(year > 0) {
+            isMissing = false;
+        }
+        if(!inclusive_page.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+
+        return isMissing;
+    }
+
+    private void validateMagazineAttributes(){
+        /*Fields to be checked:
+        private ArrayList<Author> authors = new ArrayList<>();
+        private String articleTitle;
+        private String journalTitle;
+        private String volumeNumber;
+        private String issueNumber;
+        private int year;
+        private String inclusivePage;*/
+
+        if(authors.size() == 0) {
+            errorMessages.add("Author has not been defined")
+        }
+        if(article_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Article title has not been defined");
+        }
+        if(journal_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Journal title has not been defined");
+        }
+        if(volume_number.equalsIgnoreCase("none")) {
+            errorMessages.add("Volume number has not been defined");
+        }
+        if(issue_number.equalsIgnoreCase("none")) {
+            errorMessages.add("Issue number has not been defined");
+        }
+        if(year == 0) {
+            errorMessages.add("Year has not been defined");
+        }
+        if(inclusive_page.equalsIgnoreCase("none")) {
+            errorMessages.add("Inclusive page has not been defined");
+        }
+    }
+
+    private boolean isNewspaperMissingAttributes(){
+
+        boolean isMissing = true;
+
+        /*
+        Fields to be checked:
+        private ArrayList<Author> authors = new ArrayList<>();
+        private int year;
+        private String title;
+        private String periodicalTitle;
+        private String volumeNumber;
+        private String inclusivePage;
+         */
+
+        if(authors.size() > 0) {
+            isMissing = false;
+        }
+        if(year > 0) {
+            isMissing = false;
+        }
+        if(!title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!periodical_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!volume_number.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!inclusive_page.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+
+        return isMissing;
+    }
+
+    private void validateNewspaperAttributes(){
+        /*
+        Fields to be checked:
+        private ArrayList<Author> authors = new ArrayList<>();
+        private int year;
+        private String title;
+        private String periodicalTitle;
+        private String volumeNumber;
+        private String inclusivePage;
+         */
+
+        if(authors.size() == 0) {
+            errorMessages.add("Author has not been defined");
+        }
+        if(year == 0) {
+            errorMessages.add("Year has not been defined");
+        }
+        if(title.equalsIgnoreCase("none")) {
+            errorMessages.add("Title has not been defined");
+        }
+        if(periodical_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Periodical title has not been defined");
+        }
+        if(volume_number.equalsIgnoreCase("none")) {
+            errorMessages.add("Volume number has not been defined");
+        }
+        if(inclusive_page.equalsIgnoreCase("none")) {
+            errorMessages.add("Inclusive page has not been defined");
+        }
+    }
+
+    private boolean isWebsiteMissingAttributes(){
+
+        boolean isMissing = true;
+
+        /*
+        Fields to be checked:
+        private ArrayList<Author> authors = new ArrayList<>();
+        private String websiteTitle;
+        private String articleTitle;
+        private String publisher;
+        private Date publishedDate;
+        private Date dateAccesed;
+         */
+
+        if(authors.size() > 0) {
+            isMissing = false;
+        }
+        if(!website_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!article_title.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(!publisher.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
+        if(published_date.isSet()) {
+            isMissing = false;
+        }
+        if(accessed_date.isSet()) {
+            isMissing = false;
+        }
+
+        return isMissing;
+    }
+
+    private void validateWebsiteAttributes(){
+        /*
+        Fields to be checked:
+        private ArrayList<Author> authors = new ArrayList<>();
+        private String websiteTitle;
+        private String articleTitle;
+        private String publisher;
+        private Date publishedDate;
+        private Date dateAccesed;
+         */
+
+        if(authors.size() == 0) {
+            errorMessages.add("Author has not been defined");
+        }
+        if(website_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Website title has not been defined");
+        }
+        if(article_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Article title has not been defined");
+        }
+        if(publisher.equalsIgnoreCase("none")) {
+            errorMessages.add("Publisher has not been defined");
+        }
+        if(!published_date.isSet()) {
+            errorMessages.add("Published date has not been defined");
+        }
+        if(!accessed_date.isSet()) {
+            errorMessages.add("Accessed date has not been defined");
         }
     }
 
     private void validateBookSource()
     {
-
+        if(action.equalsIgnoreCase("add")) {
+            validateBookAttributes();
+        } else {
+            if (isBookMissingAttributes()) {
+                errorMessages.add("Book data is missing")
+            }
+        }
     }
 
     private void validateMagazineSource()
     {
-
+        if(action.equalsIgnoreCase("get")) {
+            validateMagazineAttributes();
+        } else {
+            if(isMagazineMissingAttributes()) {
+                errorMessages.add("Magazine data is missing");
+            }
+        }
     }
 
     private void validateNewspaperSource()
     {
-
+        if(action.equalsIgnoreCase("get")) {
+            validateNewspaperAttributes();
+        } else {
+            if(isNewspaperMissingAttributes()) {
+                errorMessages.add("Newspaper data is missing");
+            }
+        }
     }
 
     private void validateWebsiteSource()
     {
-
+        if(action.equalsIgnoreCase("get")) {
+            validateWebsiteAttributes();
+        } else {
+            if(isWebsiteMissingAttributes()) {
+                errorMessages.add("Website data is missing");
+            }
+        }
     }
 
     private void validateJournalSource()
     {
-
+        if(action.equalsIgnoreCase("get")) {
+            validateJournalAttributes();
+        } else {
+            if(isJournalMissingAttributes()) {
+                errorMessages.add("Journal data is missing");
+            }
+        }
     }
 
     public static void main(String[] args) {
         DaftarPustaka.make {
             action "get"
-            format "mla"
-            source "website"
-            author "Bambang Pamungkas"
-            year 2005
-            title "geje"
-            publisher "honda"
-            inclusive_page "1"
-            periodical_title "gates of babylonia"
-            volume_number 10
-            web_title "Information Retrieval"
-            article_title "The Lost One's Weeping"
-            journal_title "Indonesia Pusaka"
-            accessed_date "1 1 2012"
-            published_date "1 2 2015"
+            format "apa"
+            source "book"
+            title "buku"
             getSQL
         }
     }
