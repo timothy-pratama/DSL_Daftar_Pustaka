@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Author {
     private ArrayList<String> name = new ArrayList<>();
 
-    public Author(String name){
+    public Author(String name) {
         String[] names = name.split(" ");
         for(String nama : names)
         {
