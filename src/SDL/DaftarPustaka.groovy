@@ -314,10 +314,10 @@ class DaftarPustaka {
         if(!title.equalsIgnoreCase("none")) {
             isMissing = false;
         }
-        if(city.equalsIgnoreCase("none")) {
+        if(!city.equalsIgnoreCase("none")) {
             isMissing = false;
         }
-        if(publisher.equalsIgnoreCase("none")) {
+        if(!publisher.equalsIgnoreCase("none")) {
             isMissing = false;
         }
 
@@ -688,7 +688,6 @@ class DaftarPustaka {
             action "get"
             format "apa"
             source "book"
-            title "buku"
             getSQL
         }
     }
