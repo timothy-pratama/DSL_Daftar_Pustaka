@@ -23,9 +23,10 @@ class DaftarPustaka {
     private String action = "none";
     private String format = "none";
     private String source = "none";
+    private String month = "none";
     private int year = 0;
-    private String title = "none";
     private String city = "none";
+    private String state = "none";
     private String publisher = "none";
     private String periodical_title = "none";
     private String volume_number = "none";
@@ -33,9 +34,11 @@ class DaftarPustaka {
     private String inclusive_page = "none";
     private Date published_date = new Date();
     private Date accessed_date = new Date();
+    private String book_title = "none";
     private String website_title = "none";
     private String article_title = "none";
     private String journal_title = "none";
+    private String url = "none";
 
     /* list of terminals */
     private ArrayList<String> allowedActions = new ArrayList<>();
@@ -129,6 +132,14 @@ class DaftarPustaka {
         authors.add(new Author(name));
     }
 
+    def month(String month) {
+        if(this.month.equalsIgnoreCase("none")) {
+            this.month = month;
+        } else {
+            errorMessages.add("Month has already been defined");
+        }
+    }
+
     def year(int year) {
         if(this.year == 0) {
             this.year = year;
@@ -137,9 +148,9 @@ class DaftarPustaka {
         }
     }
 
-    def title(String title){
-        if(this.title.equalsIgnoreCase("none")){
-            this.title = title;
+    def book_title(String title){
+        if(this.book_title.equalsIgnoreCase("none")){
+            this.book_title = title;
         } else {
             errorMessages.add("Title has already been defined");
         }
@@ -150,6 +161,15 @@ class DaftarPustaka {
             this.city = city;
         } else {
             errorMessages.add("City has already been defined");
+        }
+    }
+
+
+    def state(String state_publication){
+        if(this.state.equalsIgnoreCase("none")){
+            this.state = state_publication;
+        } else {
+            errorMessages.add("State has already been defined");
         }
     }
 
@@ -169,7 +189,7 @@ class DaftarPustaka {
         }
     }
 
-    def volume_number(int number){
+    def volume_number(String number){
         if(volume_number.equalsIgnoreCase("none")){
             volume_number = number;
         } else {
@@ -241,6 +261,14 @@ class DaftarPustaka {
         }
     }
 
+    def url(String weburl){
+        if(url.equalsIgnoreCase("none")){
+            this.url = weburl;
+        } else {
+            errorMessages.add("URL has already been defined");
+        }
+    }
+
     private void validateSource()
     {
         if(source.equalsIgnoreCase("book")){
@@ -296,7 +324,7 @@ class DaftarPustaka {
          * Field to be checked:
          * private ArrayList<Author> authors = new ArrayList<>();
          * private int year;
-         * private String title;
+         * private String book_title;
          * private String city;
          * private String publisher;
         */
@@ -307,7 +335,7 @@ class DaftarPustaka {
         if(year > 0) {
             isMissing = false;
         }
-        if(!title.equalsIgnoreCase("none")) {
+        if(!book_title.equalsIgnoreCase("none")) {
             isMissing = false;
         }
         if(!city.equalsIgnoreCase("none")) {
@@ -325,7 +353,7 @@ class DaftarPustaka {
          * Field to be checked:
          * private ArrayList<Author> authors = new ArrayList<>();
          * private int year;
-         * private String title;
+         * private String book_title;
          * private String city;
          * private String publisher;
         */
@@ -336,8 +364,8 @@ class DaftarPustaka {
         if(year == 0) {
             errorMessages.add("Year has not been defined");
         }
-        if(title.equalsIgnoreCase("none")) {
-            errorMessages.add("Title has not been defined");
+        if(book_title.equalsIgnoreCase("none")) {
+            errorMessages.add("book_title has not been defined");
         }
         if(city.equalsIgnoreCase("none")) {
             errorMessages.add("City has not been defined");
@@ -498,7 +526,7 @@ class DaftarPustaka {
         Fields to be checked:
         private ArrayList<Author> authors = new ArrayList<>();
         private int year;
-        private String title;
+        private String book_title;
         private String periodicalTitle;
         private String volumeNumber;
         private String inclusivePage;
@@ -510,7 +538,7 @@ class DaftarPustaka {
         if(year > 0) {
             isMissing = false;
         }
-        if(!title.equalsIgnoreCase("none")) {
+        if(!book_title.equalsIgnoreCase("none")) {
             isMissing = false;
         }
         if(!periodical_title.equalsIgnoreCase("none")) {
@@ -531,7 +559,7 @@ class DaftarPustaka {
         Fields to be checked:
         private ArrayList<Author> authors = new ArrayList<>();
         private int year;
-        private String title;
+        private String book_title;
         private String periodicalTitle;
         private String volumeNumber;
         private String inclusivePage;
@@ -543,7 +571,7 @@ class DaftarPustaka {
         if(year == 0) {
             errorMessages.add("Year has not been defined");
         }
-        if(title.equalsIgnoreCase("none")) {
+        if(book_title.equalsIgnoreCase("none")) {
             errorMessages.add("Title has not been defined");
         }
         if(periodical_title.equalsIgnoreCase("none")) {
@@ -680,15 +708,28 @@ class DaftarPustaka {
     }
 
     private void processSQL() {
+        String MLARef = "";
+        String APARef = "";
         if(action.equalsIgnoreCase("add")){
             if(source.equalsIgnoreCase("book")){
-                System.out.println("Result : "+ GenerateMLACitationBook());
+
+                MLARef =  GenerateMLACitationBook();
+                APARef = GenerateAPACitationBook();
             }
-            if(source.equalsIgnoreCase("magazine") || source.equalsIgnoreCase("newspaper")){
-                System.out.println("Result : "+ GenerateMLACitationMagazineNNewspaper());
+            else if(source.equalsIgnoreCase("magazine") || source.equalsIgnoreCase("newspaper")){
+                MLARef =  GenerateMLACitationMagazineNNewspaper();
+                APARef =  GenerateAPACitationMagazineNNewspaper();
             }
-            if(source.equalsIgnoreCase("journal")){
-                System.out.println("Result : " + GenerateMLACitationJournal());
+            else if(source.equalsIgnoreCase("journal")){
+                MLARef =  GenerateMLACitationJournal();
+                APARef = GenerateAPACitationJournal();
+            }
+            else if(source.equalsIgnoreCase("website")){
+                MLARef =  GenerateMLACitationWebsite();
+                APARef =  GenerateAPACitationWebsite();
+            }
+            else{
+                errorMessages.add("Source not recognized")
             }
         }
     }
@@ -696,31 +737,32 @@ class DaftarPustaka {
     public static void main(String[] args) {
         DaftarPustaka.make {
             action "add"
-            source "journal"
-            article_title "Metadata Generating with XY Algorithm"
-            journal_title "Metadata Programming"
-            year 2015
+            source "newspaper"
             author "Alvin Natawiguna"
-            volume_number 9
-            issue_number "21"
-            inclusive_page "108-113"
+            article_title "Programming ABC"
+            periodical_title "Newyork Times"
+            volume_number "90"
+            inclusive_page "90-100"
+            month "April"
+            year 2015
+            published_date "4 04 2015"
             getSQL
         }
     }
 
     public String GenerateMLACitationBook(){
         String MLACitationBook = ""
-        String authorCitation = GenerateAuthorMPAFormat();
+        String authorCitation = GenerateAuthorFormat();
         if(!authorCitation.equalsIgnoreCase("")){
             MLACitationBook += authorCitation+" ";
         }
-        MLACitationBook = title+" "+city+": "+publisher+", "+year+". Print."
+        MLACitationBook += '*'+book_title+"*. "+city+": "+publisher+", "+year+". Print."
         return MLACitationBook;
     }
 
     public String GenerateMLACitationMagazineNNewspaper(){
         String MLACitationMagazineNewspaper = "";
-        String authorCitation = GenerateAuthorMPAFormat();
+        String authorCitation = GenerateAuthorFormat();
         if(!authorCitation.equalsIgnoreCase("")){
             MLACitationMagazineNewspaper += authorCitation+" ";
         }
@@ -730,18 +772,23 @@ class DaftarPustaka {
 
     public String GenerateMLACitationJournal() {
         String MLACitationJournal = "";
-        String authorCitation = GenerateAuthorMPAFormat();
-        if(!authorCitation.equalsIgnoreCase("")){
-            MLACitationJournal += authorCitation+" ";
-        }
-        MLACitationJournal += '"' + article_title + '." *'+ journal_title+"* "+volume_number+"."+issue_number+" ("+year+"): "+inclusive_page+". Print.";
+        String authorCitation = GenerateAuthorFormat();
+        MLACitationJournal += authorCitation+" " + '"' + article_title + '." *'+ journal_title+"* "+volume_number+"."+issue_number+" ("+year+"): "+inclusive_page+". Print.";
         return MLACitationJournal;
     }
 
-    public String GenerateAuthorMPAFormat(){
+    public String GenerateMLACitationWebsite(){
+        String MLACitationWebsite = "";
+        String authorCitation = GenerateAuthorFormat();
+        MLACitationWebsite += authorCitation + ' "' + article_title +'." ' + "*" + website_title +"*. " + publisher + ", " + published_date.day + " " + published_date.getMonthString() + " " + published_date.year + ". Web. " + accessed_date.day + " " + accessed_date.getMonthString() +". " + accessed_date.year +". " + "<" + url +">."
+        return MLACitationWebsite;
+    }
+
+    public String GenerateAuthorFormat(){
         String authorCitation = "";
         if(authors.size() > 0){
             //One Author
+
             if(!authors.get(0).lastName.equalsIgnoreCase("")){
                 authorCitation += authors.get(0).lastName + ", ";
             }
@@ -766,13 +813,47 @@ class DaftarPustaka {
         return authorCitation;
     }
 
+    public String GenerateAPACitationBook(){
+        String MLACitationJournal = "";
+        String authorCitation = GenerateAuthorFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationJournal += authorCitation+" ";
+        }
+        MLACitationJournal += '(' + year + '). *' + book_title + "*. "+ city + ", " + state +": " + publisher + ".";
+        return MLACitationJournal;
+    }
+
+    public String GenerateAPACitationMagazineNNewspaper(){
+        String MLACitationJournal = "";
+        String authorCitation = GenerateAuthorFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationJournal += authorCitation+" ";
+        }
+        MLACitationJournal += "(" + year +", " + month + "). "  + article_title + ". *"+ periodical_title + "*, ";
+        if(!volume_number.equalsIgnoreCase("none") && !issue_number.equalsIgnoreCase("none")){
+            MLACitationJournal += volume_number + "(" + issue_number +") ";
+        }
+        MLACitationJournal += inclusive_page + ".";
+        return MLACitationJournal;
+    }
+
     public String GenerateAPACitationJournal() {
         String MLACitationJournal = "";
-        String authorCitation = GenerateAuthorMPAFormat();
+        String authorCitation = GenerateAuthorFormat();
         if(!authorCitation.equalsIgnoreCase("")){
             MLACitationJournal += authorCitation+" ";
         }
         MLACitationJournal += '(' + year + '). ' + article_title + ". *"+ journal_title+"*, *"+volume_number+"*("+issue_number+"), "+inclusive_page+".";
+        return MLACitationJournal;
+    }
+
+    public String GenerateAPACitationWebsite() {
+        String MLACitationJournal = "";
+        String authorCitation = GenerateAuthorFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationJournal += authorCitation+" ";
+        }
+        MLACitationJournal += '(' + published_date.year + ". " + published_date.month + " " + published_date.day +  "). *" + article_title + "*. Retrieved from " + url;
         return MLACitationJournal;
     }
     

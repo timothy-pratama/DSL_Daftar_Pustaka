@@ -3,19 +3,21 @@
 <action> -> action add | action get <format> | action delete
 <format> -> APA | MLA
 <source> -> source book <book_data> | source magazine <magazine_newspaper_data> | source newspaper <magazine_newspaper_data> | source website <website_data> | source journal <journal_data>
-<book_data> -> <book_data> <book_data> | <author_name> | <year> | <book_title> | <city_publication> | <publisher>
+<book_data> -> <book_data> <book_data> | <author_name> | <year> | <book_title> | <city_publication> | <publisher> | <state_publication>
 <author_name> -> author <string>
 <year> -> year (0-9)(0-9)(0-9)(0-9)
 <book_title> -> title <string>
 <string> -> (0-9, A-Z)*
 <city_publication> -> city <string>
 <publisher> -> publisher <string>
-<magazine_newspaper_data> -> <magazine_newspaper_data> <magazine_newspaper_data> | <author_name> | <year> | <title> | <periodical_title> | <volume_number> | <inclusive_page>
+<state_publication> -> state <string>
+<magazine_newspaper_data> -> <magazine_newspaper_data> <magazine_newspaper_data> | <author_name> | <year> | <title> | <periodical_title> | <volume_number> | <inclusive_page> | <month>
 <periodical_title> -> periodical title <string>
 <volume_number> -> volume <integer>
 <inclusive_page> -> page <string>
 <integer> -> (0-9)*
-<website_data> -> <website_data> <website_data> | <author_name> | <website_title> | <article_title> | <publisher> | <published_date> | <accessed_date>
+<month> -> month <string>
+<website_data> -> <website_data> <website_data> | <author_name> | <website_title> | <article_title> | <publisher> | <published_date> | <accessed_date> | <url>
 <published_date> -> published date <date>
 <accessed_date> -> accessed date <date>
 <website_title> -> web title <string>
@@ -23,6 +25,7 @@
 <date> -> date <day> <month> <year>
 <day> -> (0-3)(0-9)
 <month> -> (0-1)(0-9)
+<url> -> url <string>
 <jurnal_data> -> <jurnal_data> <jurnal_data> | <author_name> | <article_title> | <journal_title> | <volume_number> | <issue_number> | <year> | <inclusive_page> | Print
 <journal_title> -> jurnal title <string>
 <issue_number> -> <integer>

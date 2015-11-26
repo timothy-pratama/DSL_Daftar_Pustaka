@@ -1,0 +1,44 @@
+<<<<BOOK>>>>
+action "add"
+source "book"
+author "Alvin Natawiguna"
+book_title "Programming ABC"
+year 2015
+city "Bandung"
+state "New York"
+publisher "ITB"
+
+<<<<NEWSPAPER N MAGAZINE>>>>
+action "add"
+source "newspaper"
+author "Alvin Natawiguna"
+article_title "Programming ABC"
+periodical_title "Newyork Times"
+volume_number "90"
+inclusive_page "90-100"
+month "April"
+year 2015
+published_date "4 04 2015"
+
+<<<<WEBSITE>>>>
+action "add"
+source "website"
+author "Kevin Huang"
+publisher "ITB"
+published_date "20 10 2015"
+accessed_date "25 12 2015"
+article_title "Programming X"
+website_title "Social Today"
+url "google.com"
+
+<<<<JOURNAL>>>>
+action "add"
+source "journal"
+author "Alvin Natawiguna"
+article_title "Programming Y Algorithm"
+journal_title "Computer Science"
+volume_number "8"
+issue_number "211"
+year 2015
+inclusive_page "300-309"
+getSQL
