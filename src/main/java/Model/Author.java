@@ -9,7 +9,7 @@ public class Author {
     private ArrayList<String> name = new ArrayList<>();
 
     public Author(String name) {
-        String[] names = name.split(" ");
+        String[] names = name.split(" ",2);
         for(String nama : names)
         {
             this.name.add(nama);
@@ -29,6 +29,11 @@ public class Author {
     }
 
     public String getLastName() {
-        return name.get(name.size()-1);
+        if(name.size()>1){
+            return name.get(1);
+        }
+        else{
+            return "";
+        }
     }
 }

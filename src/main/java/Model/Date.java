@@ -7,7 +7,7 @@ public class Date {
     private int day;
     private int month;
     private int year;
-
+    private String[] MonthName = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Des"};
     public Date(){
         day = 0;
         month = 0;
@@ -50,5 +50,12 @@ public class Date {
         } else {
             return true;
         }
+    }
+
+    public String getMonthString(){
+        if(month > 0 && month <=12){
+            return MonthName[month-1];
+        }
+        return null;
     }
 }

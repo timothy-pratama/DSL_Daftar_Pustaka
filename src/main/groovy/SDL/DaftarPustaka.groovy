@@ -170,7 +170,7 @@ class DaftarPustaka {
     }
 
     def volume_number(int number){
-        if(!volume_number.equalsIgnoreCase("none")){
+        if(volume_number.equalsIgnoreCase("none")){
             volume_number = number;
         } else {
             errorMessages.add("Volume number has already been defined");
@@ -288,10 +288,6 @@ class DaftarPustaka {
         }
     }
 
-    private void processSQL() {
-        System.out.println("No error found! Generating SQL Query...");
-    }
-
     private boolean isBookMissingAttributes()
     {
         boolean isMissing = true;
@@ -334,7 +330,7 @@ class DaftarPustaka {
          * private String publisher;
         */
 
-        if (authors.size() == 0) {
+        if (authors.size() == 0 && !source.equalsIgnoreCase("book")) {
             errorMessages.add("Author has not been defined");
         }
         if(year == 0) {
@@ -683,12 +679,101 @@ class DaftarPustaka {
         }
     }
 
+    private void processSQL() {
+        if(action.equalsIgnoreCase("add")){
+            if(source.equalsIgnoreCase("book")){
+                System.out.println("Result : "+ GenerateMLACitationBook());
+            }
+            if(source.equalsIgnoreCase("magazine") || source.equalsIgnoreCase("newspaper")){
+                System.out.println("Result : "+ GenerateMLACitationMagazineNNewspaper());
+            }
+            if(source.equalsIgnoreCase("journal")){
+                System.out.println("Result : " + GenerateMLACitationJournal());
+            }
+        }
+    }
+
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "get"
-            format "apa"
-            source "book"
+            action "add"
+            source "journal"
+            article_title "Metadata Generating with XY Algorithm"
+            journal_title "Metadata Programming"
+            year 2015
+            author "Alvin Natawiguna"
+            volume_number 9
+            issue_number "21"
+            inclusive_page "108-113"
             getSQL
         }
     }
+
+    public String GenerateMLACitationBook(){
+        String MLACitationBook = ""
+        String authorCitation = GenerateAuthorMPAFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationBook += authorCitation+" ";
+        }
+        MLACitationBook = title+" "+city+": "+publisher+", "+year+". Print."
+        return MLACitationBook;
+    }
+
+    public String GenerateMLACitationMagazineNNewspaper(){
+        String MLACitationMagazineNewspaper = "";
+        String authorCitation = GenerateAuthorMPAFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationMagazineNewspaper += authorCitation+" ";
+        }
+        MLACitationMagazineNewspaper += '"' + article_title + '."'+" *" + periodical_title+ "* " + published_date.day + " " + published_date.getMonthString() +". " + published_date.year + ": "+inclusive_page +". Print.";
+        return MLACitationMagazineNewspaper;
+    }
+
+    public String GenerateMLACitationJournal() {
+        String MLACitationJournal = "";
+        String authorCitation = GenerateAuthorMPAFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationJournal += authorCitation+" ";
+        }
+        MLACitationJournal += '"' + article_title + '." *'+ journal_title+"* "+volume_number+"."+issue_number+" ("+year+"): "+inclusive_page+". Print.";
+        return MLACitationJournal;
+    }
+
+    public String GenerateAuthorMPAFormat(){
+        String authorCitation = "";
+        if(authors.size() > 0){
+            //One Author
+            if(!authors.get(0).lastName.equalsIgnoreCase("")){
+                authorCitation += authors.get(0).lastName + ", ";
+            }
+            authorCitation += authors.get(0).firstName;
+            if(authors.size() > 1 && authors.size() <= 3){
+                //More than one author
+                for(int i =1;i<authors.size()-1;i++){
+                    authorCitation += ", " + authors.get(i).firstName;
+                    if(!authors.get(i).lastName.equalsIgnoreCase("")){
+                        authorCitation += " " +authors.get(i).lastName;
+                    }
+                }
+                authorCitation += ", and " + authors.get(authors.size()-1).firstName;
+                if(!authors.get(authors.size()-1).lastName.equalsIgnoreCase("")){
+                    authorCitation += " " + authors.get(authors.size()-1).lastName;
+                }
+            }else if(authors.size() > 3){
+                authorCitation += ", et al";
+            }
+            authorCitation += ".";
+        }
+        return authorCitation;
+    }
+
+    public String GenerateAPACitationJournal() {
+        String MLACitationJournal = "";
+        String authorCitation = GenerateAuthorMPAFormat();
+        if(!authorCitation.equalsIgnoreCase("")){
+            MLACitationJournal += authorCitation+" ";
+        }
+        MLACitationJournal += '(' + year + '). ' + article_title + ". *"+ journal_title+"*, *"+volume_number+"*("+issue_number+"), "+inclusive_page+".";
+        return MLACitationJournal;
+    }
+    
 }
