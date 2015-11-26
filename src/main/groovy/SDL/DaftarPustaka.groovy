@@ -18,6 +18,7 @@ class DaftarPustaka {
     private Magazine magazine = new Magazine();
     private Newspaper newspaper = new Newspaper();
     private Website website = new Website();
+    private String DatabaseName = "referensi";
 
     /* user input */
     private String action = "none";
@@ -710,6 +711,7 @@ class DaftarPustaka {
     private void processSQL() {
         String MLARef = "";
         String APARef = "";
+        String SQLString = "";
         if(action.equalsIgnoreCase("add")){
             if(source.equalsIgnoreCase("book")){
 
@@ -731,6 +733,9 @@ class DaftarPustaka {
             else{
                 errorMessages.add("Source not recognized")
             }
+            SQLString = String.format("INSERT INTO %s (Source,Year,Book_Title,City,Publisher,Periodical_Title,Volume_Number,Issue_Number,Inclusive_Page,Published_Date,Accessed_Date,Website_Title,Article_Title,Journal_Title,APA,MLA" +
+                    ") VALUES ('%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,year,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,APARef,MLARef);
+            System.out.println("SQL : "+SQLString);
         }
     }
 

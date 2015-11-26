@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Arrays;
+
 /**
  * Created by timothy.pratama on 22-Nov-15.
  */
@@ -57,5 +59,10 @@ public class Date {
             return MonthName[month-1];
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "" +year + "-" + month + "-" + day;
     }
 }
