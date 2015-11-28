@@ -737,17 +737,12 @@ class DaftarPustaka {
                     ") VALUES ('%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,year,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,APARef,MLARef);
             System.out.println("SQL : "+SQLString);
         }
-        else if(action.equalsIgnoreCase("get")){
+        else{
             StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.append("SELECT ").append(format).append(" FROM ").append(DatabaseName);
-            sqlBuilder.append(ConditionalHandler());
-            sqlBuilder.append(";");
-            SQLString = sqlBuilder.toString();
-            System.out.println("SQL : "+ SQLString);
-        }
-        else if(action.equalsIgnoreCase("delete")){
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.append("DELETE").append(" FROM ").append(DatabaseName);
+            if(action.equalsIgnoreCase("get"))
+                sqlBuilder.append("SELECT ").append(format).append(" FROM ").append(DatabaseName);
+            else if(action.equalsIgnoreCase("delete"))
+                sqlBuilder.append("DELETE").append(" FROM ").append(DatabaseName);
             sqlBuilder.append(ConditionalHandler());
             sqlBuilder.append(";");
             SQLString = sqlBuilder.toString();
