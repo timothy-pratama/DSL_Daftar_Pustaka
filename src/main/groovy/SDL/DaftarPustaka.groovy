@@ -757,7 +757,8 @@ class DaftarPustaka {
 
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "delete"
+            action "get"
+            format "apa"
             source "newspaper"
             author "Alvin Natawiguna"
             article_title "Programming ABC"
@@ -777,19 +778,19 @@ class DaftarPustaka {
         if(!source.equals("none")){
             sqlBuilder.append(" WHERE source = '").append(source).append("'");
             if(source.equalsIgnoreCase("book") && !book_title.equals("none")){
-                sqlBuilder.append(" AND book_title LIKE '").append('%').append(source).append('%').append("'");
+                sqlBuilder.append(" AND book_title LIKE '").append('%').append(book_title).append('%').append("'");
             }
             else if(source.equalsIgnoreCase("journal") && !journal_title.equals("none")){
-                sqlBuilder.append(" AND journal_title LIKE '").append('%').append(source).append('%').append("'");
+                sqlBuilder.append(" AND journal_title LIKE '").append('%').append(journal_title).append('%').append("'");
             }
             else if((source.equalsIgnoreCase("magazine") || source.equalsIgnoreCase("newspaper")) && !periodical_title.equals("none")){
-                sqlBuilder.append(" AND periodical_title LIKE '").append('%').append(source).append('%').append("'");
+                sqlBuilder.append(" AND periodical_title LIKE '").append('%').append(periodical_title).append('%').append("'");
             }
             else if(source.equalsIgnoreCase("website") && !website_title.equals("none")){
-                sqlBuilder.append(" AND website_title LIKE '").append('%').append(source).append('%').append("'");
+                sqlBuilder.append(" AND website_title LIKE '").append('%').append(website_title).append('%').append("'");
             }
             if(!article_title.equals("none")){
-                sqlBuilder.append(" AND website_title LIKE '").append('%').append(website_title).append('%').append("'");
+                sqlBuilder.append(" AND article_title LIKE '").append('%').append(article_title).append('%').append("'");
             }
             if(year != 0){
                 sqlBuilder.append(" AND year = ").append(year);
@@ -825,7 +826,7 @@ class DaftarPustaka {
                 else{
                     sqlBuilder.append.(" AND ");
                 }
-                sqlBuilder.append("website_title LIKE '").append('%').append(website_title).append('%').append("'");
+                sqlBuilder.append(" AND article_title LIKE '").append('%').append(article_title).append('%').append("'");
             }
             if(year != 0){
                 if(noCond){
