@@ -366,7 +366,7 @@ class DaftarPustaka {
             errorMessages.add("Year has not been defined");
         }
         if(book_title.equalsIgnoreCase("none")) {
-            errorMessages.add("book_title has not been defined");
+            errorMessages.add("Book Title has not been defined");
         }
         if(city.equalsIgnoreCase("none")) {
             errorMessages.add("City has not been defined");
@@ -455,7 +455,7 @@ class DaftarPustaka {
         /*Fields to be checked:
         private ArrayList<Author> authors = new ArrayList<>();
         private String articleTitle;
-        private String journalTitle;
+        private String periodicalTitle;
         private String volumeNumber;
         private String issueNumber;
         private int year;
@@ -467,7 +467,7 @@ class DaftarPustaka {
         if(!article_title.equalsIgnoreCase("none")) {
             isMissing = false;
         }
-        if(!journal_title.equalsIgnoreCase("none")) {
+        if(!periodical_title.equalsIgnoreCase("none")) {
             isMissing = false;
         }
         if(!volume_number.equalsIgnoreCase("none")) {
@@ -490,7 +490,7 @@ class DaftarPustaka {
         /*Fields to be checked:
         private ArrayList<Author> authors = new ArrayList<>();
         private String articleTitle;
-        private String journalTitle;
+        private String periodicalTitle;
         private String volumeNumber;
         private String issueNumber;
         private int year;
@@ -502,8 +502,8 @@ class DaftarPustaka {
         if(article_title.equalsIgnoreCase("none")) {
             errorMessages.add("Article title has not been defined");
         }
-        if(journal_title.equalsIgnoreCase("none")) {
-            errorMessages.add("Journal title has not been defined");
+        if(periodical_title.equalsIgnoreCase("none")) {
+            errorMessages.add("Periodical title has not been defined");
         }
         if(volume_number.equalsIgnoreCase("none")) {
             errorMessages.add("Volume number has not been defined");
@@ -539,7 +539,7 @@ class DaftarPustaka {
         if(year > 0) {
             isMissing = false;
         }
-        if(!book_title.equalsIgnoreCase("none")) {
+        if(!article_title.equalsIgnoreCase("none")) {
             isMissing = false;
         }
         if(!periodical_title.equalsIgnoreCase("none")) {
@@ -572,7 +572,7 @@ class DaftarPustaka {
         if(year == 0) {
             errorMessages.add("Year has not been defined");
         }
-        if(book_title.equalsIgnoreCase("none")) {
+        if(article_title.equalsIgnoreCase("none")) {
             errorMessages.add("Title has not been defined");
         }
         if(periodical_title.equalsIgnoreCase("none")) {
@@ -737,11 +737,27 @@ class DaftarPustaka {
                     ") VALUES ('%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,year,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,APARef,MLARef);
             System.out.println("SQL : "+SQLString);
         }
+        else if(action.equalsIgnoreCase("get")){
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("SELECT ").append(format).append(" FROM ").append(DatabaseName);
+            sqlBuilder.append(ConditionalHandler());
+            sqlBuilder.append(";");
+            SQLString = sqlBuilder.toString();
+            System.out.println("SQL : "+ SQLString);
+        }
+        else if(action.equalsIgnoreCase("delete")){
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("DELETE").append(" FROM ").append(DatabaseName);
+            sqlBuilder.append(ConditionalHandler());
+            sqlBuilder.append(";");
+            SQLString = sqlBuilder.toString();
+            System.out.println("SQL : "+ SQLString);
+        }
     }
 
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "add"
+            action "delete"
             source "newspaper"
             author "Alvin Natawiguna"
             article_title "Programming ABC"
@@ -753,6 +769,146 @@ class DaftarPustaka {
             published_date "4 04 2015"
             getSQL
         }
+    }
+
+    public String ConditionalHandler(){
+        StringBuilder sqlBuilder = new StringBuilder();
+        boolean noCond = true;
+        if(!source.equals("none")){
+            sqlBuilder.append(" WHERE source = '").append(source).append("'");
+            if(source.equalsIgnoreCase("book") && !book_title.equals("none")){
+                sqlBuilder.append(" AND book_title LIKE '").append('%').append(source).append('%').append("'");
+            }
+            else if(source.equalsIgnoreCase("journal") && !journal_title.equals("none")){
+                sqlBuilder.append(" AND journal_title LIKE '").append('%').append(source).append('%').append("'");
+            }
+            else if((source.equalsIgnoreCase("magazine") || source.equalsIgnoreCase("newspaper")) && !periodical_title.equals("none")){
+                sqlBuilder.append(" AND periodical_title LIKE '").append('%').append(source).append('%').append("'");
+            }
+            else if(source.equalsIgnoreCase("website") && !website_title.equals("none")){
+                sqlBuilder.append(" AND website_title LIKE '").append('%').append(source).append('%').append("'");
+            }
+            if(!article_title.equals("none")){
+                sqlBuilder.append(" AND website_title LIKE '").append('%').append(website_title).append('%').append("'");
+            }
+            if(year != 0){
+                sqlBuilder.append(" AND year = ").append(year);
+            }
+            if(!city.equals("none")){
+                sqlBuilder.append(" AND city LIKE '").append('%').append(city).append('%').append("'");
+            }
+            if(!publisher.equals("none")){
+                sqlBuilder.append(" AND publisher LIKE '").append('%').append(publisher).append('%').append("'");
+            }
+            if(!volume_number.equals("none")){
+                sqlBuilder.append(" AND volume_number = '").append(volume_number).append("'");
+            }
+            if(!issue_number.equals("none")){
+                sqlBuilder.append(" AND issue_number = '").append(issue_number).append("'");
+            }
+            if(!inclusive_page.equals("none")){
+                sqlBuilder.append(" AND inclusive_page = '").append(inclusive_page).append("'");
+            }
+            if(published_date.isSet()){
+                sqlBuilder.append(" AND published_date = '").append(published_date.toString()).append("'");
+            }
+            if(accessed_date.isSet()){
+                sqlBuilder.append(" AND accessed_date = '").append(accessed_date.toString()).append("'");
+            }
+        }
+        else{
+            if(!article_title.equals("none")){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("website_title LIKE '").append('%').append(website_title).append('%').append("'");
+            }
+            if(year != 0){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("year = ").append(year);
+            }
+            if(!city.equals("none")){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("city LIKE '").append('%').append(city).append('%').append("'");
+            }
+            if(!publisher.equals("none")){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("publisher LIKE '").append('%').append(publisher).append('%').append("'");
+            }
+            if(!volume_number.equals("none")){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("volume_number = '").append(volume_number).append("'");
+            }
+            if(!issue_number.equals("none")){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("issue_number = '").append(issue_number).append("'");
+            }
+            if(!inclusive_page.equals("none")){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("inclusive_page = '").append(inclusive_page).append("'");
+            }
+            if(published_date.isSet()){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("published_date = '").append(published_date.toString()).append("'");
+            }
+            if(accessed_date.isSet()){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append("accessed_date = '").append(accessed_date.toString()).append("'");
+            }
+        }
+        return sqlBuilder.toString();
     }
 
     public String GenerateMLACitationBook(){
@@ -861,5 +1017,5 @@ class DaftarPustaka {
         MLACitationJournal += '(' + published_date.year + ". " + published_date.month + " " + published_date.day +  "). *" + article_title + "*. Retrieved from " + url;
         return MLACitationJournal;
     }
-    
+
 }
