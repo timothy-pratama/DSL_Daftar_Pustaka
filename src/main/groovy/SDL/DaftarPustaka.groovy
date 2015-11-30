@@ -761,8 +761,8 @@ class DaftarPustaka {
             else{
                 errorMessages.add("Source not recognized")
             }
-            SQLString = String.format("INSERT INTO %s (Source,Author1,Author2,Author3,Year,Book_Title,City,Publisher,Periodical_Title,Volume_Number,Issue_Number,Inclusive_Page,Published_Date,Accessed_Date,Website_Title,Article_Title,Journal_Title,APA,MLA" +
-                    ") VALUES ('%s','%s','%s','%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,authorsname.get(0).toString(),authorsname.get(1).toString(),authorsname.get(2).toString(),year,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,APARef,MLARef);
+            SQLString = String.format("INSERT INTO %s (Source,Author1,Author2,Author3,month,Year,state,Book_Title,City,Publisher,Periodical_Title,Volume_Number,Issue_Number,Inclusive_Page,Published_Date,Accessed_Date,Website_Title,Article_Title,Journal_Title,url,APA,MLA" +
+                    ") VALUES ('%s','%s','%s','%s','%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,authorsname.get(0).toString(),authorsname.get(1).toString(),authorsname.get(2).toString(),month,year,state,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,url,APARef,MLARef);
             System.out.println("SQL : "+SQLString);
         }
         else{
@@ -800,12 +800,12 @@ class DaftarPustaka {
 //            publisher "ITB Indonesia"
 
             //<<Website>>
-//            accessed_date "20 12 2015"
-//            published_date "11 2 2015"
-//            url "http://facebook.com/RsAsdf"
-//            website_title "How to program DSL"
-//            article_title "Easiest way to program DSL #1"
-//            publisher "ITB Indonesia"
+            accessed_date "20 12 2015"
+            published_date "11 2 2015"
+            url "http://facebook.com/RsAsdf"
+            website_title "How to program DSL"
+            article_title "Easiest way to program DSL #1"
+            publisher "ITB Indonesia"
             getSQL
         }
     }
@@ -833,11 +833,20 @@ class DaftarPustaka {
             if(year != 0){
                 sqlBuilder.append(" AND year = ").append(year);
             }
+            if(month != 0){
+                sqlBuilder.append(" AND month = ").append(month);
+            }
+            if(state.equalsIgnoreCase("none")){
+                sqlBuilder.append(" AND state LIKE '").append('%').append(state).append('%').append("'");
+            }
             if(!city.equals("none")){
                 sqlBuilder.append(" AND city LIKE '").append('%').append(city).append('%').append("'");
             }
             if(!publisher.equals("none")){
                 sqlBuilder.append(" AND publisher LIKE '").append('%').append(publisher).append('%').append("'");
+            }
+            if(!periodical_title.equalsIgnoreCase("none")){
+                sqlBuilder.append(" AND Periodical_Title LIKE '").append('%').append(periodical_title).append('%').append("'");
             }
             if(!volume_number.equals("none")){
                 sqlBuilder.append(" AND volume_number = '").append(volume_number).append("'");
@@ -861,6 +870,10 @@ class DaftarPustaka {
                     sqlBuilder.append(" OR Author").append(3 + " = '").append(authors.get(i).getFullname()).append("')");
                 }
             }
+            if(!url.equalsIgnoreCase("none")){
+                sqlBuilder.append(" AND url = '").append(url.append("'"));
+            }
+
         }
         else{
             if(!authors.isEmpty()){
