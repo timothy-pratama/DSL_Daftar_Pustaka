@@ -7,6 +7,15 @@ import java.util.ArrayList;
  */
 public class Author {
     private ArrayList<String> name = new ArrayList<>();
+    private String fullname = "none";
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 
     public Author(String name) {
         String[] names = name.split(" ",2);
@@ -14,6 +23,7 @@ public class Author {
         {
             this.name.add(nama);
         }
+        this.fullname = name;
     }
 
     public ArrayList<String> getName() {

@@ -12,6 +12,7 @@ import Model.Website
  * Created by timothy.pratama on 22-Nov-15.
  */
 class DaftarPustaka {
+    private final int MaxAuthor = 3;
     private ArrayList<Author> authors = new ArrayList<>();
     private Book book = new Book();
     private Journal journal = new Journal();
@@ -698,6 +699,14 @@ class DaftarPustaka {
         String APARef = "";
         String SQLString = "";
         if(action.equalsIgnoreCase("add")){
+            List<String> authorsname = new ArrayList<String>();
+            for(int i = 0;i< 3;i++){
+                if(i < authors.size()){
+                    authorsname.add(authors.get(i).getFullname());
+                }else{
+                    authorsname.add("none");
+                }
+            }
             if(source.equalsIgnoreCase("book")){
 
                 MLARef =  GenerateMLACitationBook();
@@ -718,8 +727,8 @@ class DaftarPustaka {
             else{
                 errorMessages.add("Source not recognized")
             }
-            SQLString = String.format("INSERT INTO %s (Source,Year,Book_Title,City,Publisher,Periodical_Title,Volume_Number,Issue_Number,Inclusive_Page,Published_Date,Accessed_Date,Website_Title,Article_Title,Journal_Title,APA,MLA" +
-                    ") VALUES ('%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,year,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,APARef,MLARef);
+            SQLString = String.format("INSERT INTO %s (Source,Author1,Author2,Author3,Year,Book_Title,City,Publisher,Periodical_Title,Volume_Number,Issue_Number,Inclusive_Page,Published_Date,Accessed_Date,Website_Title,Article_Title,Journal_Title,APA,MLA" +
+                    ") VALUES ('%s','%s','%s','%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",DatabaseName,source,authorsname.get(0).toString(),authorsname.get(1).toString(),authorsname.get(2).toString(),year,book_title,city,publisher,periodical_title,volume_number,issue_number,inclusive_page,published_date.toString(),accessed_date.toString(),website_title,article_title,journal_title,APARef,MLARef);
             System.out.println("SQL : "+SQLString);
         }
         else{
@@ -740,6 +749,7 @@ class DaftarPustaka {
             action "add"
             source "magazine"
             author "Avin Natawiguna"
+            author "Timoty Pratama"
             article_title "Programming SDX"
             periodical_title "Newyork times"
             inclusive_page "20-30"
@@ -796,8 +806,21 @@ class DaftarPustaka {
             if(accessed_date.isSet()){
                 sqlBuilder.append(" AND accessed_date = '").append(accessed_date.toString()).append("'");
             }
+//            for(int i =0;o<authors.size();i++){
+//
+//            }
         }
         else{
+            if(!authors.isEmpty()){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                sqlBuilder.append(" AND article_title LIKE '").append('%').append(article_title).append('%').append("'");
+            }
             if(!article_title.equals("none")){
                 if(noCond){
                     sqlBuilder.append(" WHERE ");
@@ -888,6 +911,7 @@ class DaftarPustaka {
                 }
                 sqlBuilder.append("accessed_date = '").append(accessed_date.toString()).append("'");
             }
+
         }
         return sqlBuilder.toString();
     }
