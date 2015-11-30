@@ -12,13 +12,7 @@ import Model.Website
  * Created by timothy.pratama on 22-Nov-15.
  */
 class DaftarPustaka {
-    private final int MaxAuthor = 3;
     private ArrayList<Author> authors = new ArrayList<>();
-    private Book book = new Book();
-    private Journal journal = new Journal();
-    private Magazine magazine = new Magazine();
-    private Newspaper newspaper = new Newspaper();
-    private Website website = new Website();
     private String DatabaseName = "referensi";
 
     /* user input */
@@ -1087,37 +1081,4 @@ class DaftarPustaka {
         MLACitationJournal += '(' + published_date.year + ". " + published_date.month + " " + published_date.day +  "). *" + article_title + "*. Retrieved from " + url;
         return MLACitationJournal;
     }
-
-    public static void main(String[] args) {
-        DaftarPustaka.make {
-            action "add"
-            source "website"
-            author "Timoty Pratama"
-
-            //<<Magazine & Newspeper>>
-//            year 2015
-//            inclusive_page "29p"
-//            published_date "20 09 2015"
-//            month "October"
-//            article_title "How to make RPLSD"
-//            periodical_title "Analisa"
-
-            //<<BOOK>>
-//            book_title "RPSD Programming"
-//            year 2015
-//            city "Tangerang"
-//            state "West Java"
-//            publisher "ITB Indonesia"
-
-            //<<Website>>
-            accessed_date "20 12 2015"
-            published_date "11 2 2015"
-            url "http://facebook.com/RsAsdf"
-            website_title "How to program DSL"
-            article_title "Easiest way to program DSL #1"
-            publisher "ITB Indonesia"
-            getSQL
-        }
-    }
-
 }
