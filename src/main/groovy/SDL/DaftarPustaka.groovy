@@ -435,12 +435,6 @@ class DaftarPustaka {
         if(journal_title.equalsIgnoreCase("none")) {
             errorMessages.add("Journal title has not been defined");
         }
-        if(volume_number.equalsIgnoreCase("none")) {
-            errorMessages.add("Volume number has not been defined");
-        }
-        if(issue_number.equalsIgnoreCase("none")) {
-            errorMessages.add("Issue number has not been defined");
-        }
         if(year == 0) {
             errorMessages.add("Year has not been defined");
         }
@@ -504,12 +498,6 @@ class DaftarPustaka {
         }
         if(periodical_title.equalsIgnoreCase("none")) {
             errorMessages.add("Periodical title has not been defined");
-        }
-        if(volume_number.equalsIgnoreCase("none")) {
-            errorMessages.add("Volume number has not been defined");
-        }
-        if(issue_number.equalsIgnoreCase("none")) {
-            errorMessages.add("Issue number has not been defined");
         }
         if(year == 0) {
             errorMessages.add("Year has not been defined");
@@ -577,9 +565,6 @@ class DaftarPustaka {
         }
         if(periodical_title.equalsIgnoreCase("none")) {
             errorMessages.add("Periodical title has not been defined");
-        }
-        if(volume_number.equalsIgnoreCase("none")) {
-            errorMessages.add("Volume number has not been defined");
         }
         if(inclusive_page.equalsIgnoreCase("none")) {
             errorMessages.add("Inclusive page has not been defined");
@@ -666,7 +651,7 @@ class DaftarPustaka {
 
     private void validateMagazineSource()
     {
-        if(action.equalsIgnoreCase("get")) {
+        if(action.equalsIgnoreCase("add")) {
             validateMagazineAttributes();
         } else {
             if(isMagazineMissingAttributes()) {
@@ -677,7 +662,7 @@ class DaftarPustaka {
 
     private void validateNewspaperSource()
     {
-        if(action.equalsIgnoreCase("get")) {
+        if(action.equalsIgnoreCase("add")) {
             validateNewspaperAttributes();
         } else {
             if(isNewspaperMissingAttributes()) {
@@ -688,7 +673,7 @@ class DaftarPustaka {
 
     private void validateWebsiteSource()
     {
-        if(action.equalsIgnoreCase("get")) {
+        if(action.equalsIgnoreCase("add")) {
             validateWebsiteAttributes();
         } else {
             if(isWebsiteMissingAttributes()) {
@@ -699,7 +684,7 @@ class DaftarPustaka {
 
     private void validateJournalSource()
     {
-        if(action.equalsIgnoreCase("get")) {
+        if(action.equalsIgnoreCase("add")) {
             validateJournalAttributes();
         } else {
             if(isJournalMissingAttributes()) {
@@ -752,17 +737,17 @@ class DaftarPustaka {
 
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "get"
-            format "apa"
-            source "newspaper"
-            author "Alvin Natawiguna"
-            article_title "Programming ABC"
-            periodical_title "Newyork Times"
-            volume_number "90"
-            inclusive_page "90-100"
-            month "April"
+            action "add"
+            source "magazine"
+            author "Avin Natawiguna"
+            article_title "Programming SDX"
+            periodical_title "Newyork times"
+            inclusive_page "20-30"
+            volume_number "2012"
+            issue_number "2015"
+            month "October"
             year 2015
-            published_date "4 04 2015"
+            published_date "22 10 2015"
             getSQL
         }
     }
