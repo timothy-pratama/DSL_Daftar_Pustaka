@@ -418,6 +418,15 @@ class DaftarPustaka {
         if(!inclusive_page.equalsIgnoreCase("none")) {
             isMissing = false;
         }
+        if(published_date.isSet()){
+            isMissing = false;
+        }
+        if(!volume_number.equalsIgnoreCase("none")){
+            isMissing = false;
+        }
+        if(!issue_number.equalsIgnoreCase("none")){
+            isMissing = false;
+        }
 
         return isMissing;
     }
@@ -446,7 +455,16 @@ class DaftarPustaka {
             errorMessages.add("Year has not been defined");
         }
         if(inclusive_page.equalsIgnoreCase("none")) {
-            errorMessages.add("Inclusive page has not been defined");
+            errorMessages.add("Inclusive Page has not been defined");
+        }
+        if(!published_date.isSet()){
+            errorMessages.add("Published Date has not been defined");
+        }
+        if(issue_number.equalsIgnoreCase("none")){
+            errorMessages.add("Issue_Number has not been defined");
+        }
+        if(volume_number.equalsIgnoreCase("none")){
+            errorMessages.add("Volume_Number has not been defined");
         }
     }
 
@@ -801,28 +819,28 @@ class DaftarPustaka {
             if(year != 0){
                 sqlBuilder.append(" AND year = ").append(year);
             }
-            if(month != 0){
+            if(!month.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND month = ").append(month);
             }
-            if(state.equalsIgnoreCase("none")){
+            if(!state.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND state LIKE '").append('%').append(state).append('%').append("'");
             }
-            if(!city.equals("none")){
+            if(!city.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND city LIKE '").append('%').append(city).append('%').append("'");
             }
-            if(!publisher.equals("none")){
+            if(!publisher.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND publisher LIKE '").append('%').append(publisher).append('%').append("'");
             }
             if(!periodical_title.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND Periodical_Title LIKE '").append('%').append(periodical_title).append('%').append("'");
             }
-            if(!volume_number.equals("none")){
+            if(!volume_number.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND volume_number = '").append(volume_number).append("'");
             }
-            if(!issue_number.equals("none")){
+            if(!issue_number.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND issue_number = '").append(issue_number).append("'");
             }
-            if(!inclusive_page.equals("none")){
+            if(!inclusive_page.equalsIgnoreCase("none")){
                 sqlBuilder.append(" AND inclusive_page = '").append(inclusive_page).append("'");
             }
             if(published_date.isSet()){
@@ -1027,27 +1045,27 @@ class DaftarPustaka {
     }
 
     public String GenerateAPACitationBook(){
-        String MLACitationJournal = "";
+        String MLACitationBook = "";
         String authorCitation = GenerateAuthorFormat();
         if(!authorCitation.equalsIgnoreCase("")){
-            MLACitationJournal += authorCitation+" ";
+            MLACitationBook += authorCitation+" ";
         }
-        MLACitationJournal += '(' + year + '). *' + book_title + "*. "+ city + ", " + state +": " + publisher + ".";
-        return MLACitationJournal;
+        MLACitationBook += '(' + year + '). *' + book_title + "*. "+ city + ", " + state +": " + publisher + ".";
+        return MLACitationBook;
     }
 
     public String GenerateAPACitationMagazineNNewspaper(){
-        String MLACitationJournal = "";
+        String MLACitationNewspaper = "";
         String authorCitation = GenerateAuthorFormat();
         if(!authorCitation.equalsIgnoreCase("")){
-            MLACitationJournal += authorCitation+" ";
+            MLACitationNewspaper += authorCitation+" ";
         }
-        MLACitationJournal += "(" + year +", " + month + "). "  + article_title + ". *"+ periodical_title + "*, ";
+        MLACitationNewspaper += "(" + year +", " + month + "). "  + article_title + ". *"+ periodical_title + "*, ";
         if(!volume_number.equalsIgnoreCase("none") && !issue_number.equalsIgnoreCase("none")){
-            MLACitationJournal += volume_number + "(" + issue_number +") ";
+            MLACitationNewspaper += volume_number + "(" + issue_number +") ";
         }
-        MLACitationJournal += inclusive_page + ".";
-        return MLACitationJournal;
+        MLACitationNewspaper += inclusive_page + ".";
+        return MLACitationNewspaper;
     }
 
     public String GenerateAPACitationJournal() {
