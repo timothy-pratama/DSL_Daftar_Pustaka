@@ -346,6 +346,9 @@ class DaftarPustaka {
         if(!publisher.equalsIgnoreCase("none")) {
             isMissing = false;
         }
+        if(!state.equalsIgnoreCase("none")){
+            isMissing = false;
+        }
 
         return isMissing;
     }
@@ -360,7 +363,7 @@ class DaftarPustaka {
          * private String publisher;
         */
 
-        if (authors.size() == 0 && !source.equalsIgnoreCase("book")) {
+        if (authors.size() == 0) {
             errorMessages.add("Author has not been defined");
         }
         if(year == 0) {
@@ -374,6 +377,9 @@ class DaftarPustaka {
         }
         if(publisher.equalsIgnoreCase("none")) {
             errorMessages.add("Publisher has not been defined");
+        }
+        if(state.equalsIgnoreCase("none")){
+            errorMessages.add("State has not been defined");
         }
     }
 
@@ -474,6 +480,9 @@ class DaftarPustaka {
         if(year > 0) {
             isMissing = false;
         }
+        if(!month.equalsIgnoreCase("none")){
+            isMissing = false;
+        }
         if(!inclusive_page.equalsIgnoreCase("none")) {
             isMissing = false;
         }
@@ -505,6 +514,12 @@ class DaftarPustaka {
         }
         if(inclusive_page.equalsIgnoreCase("none")) {
             errorMessages.add("Inclusive page has not been defined");
+        }
+        if(!published_date.isSet()){
+            errorMessages.add("Published date has not been defined");
+        }
+        if(month.equalsIgnoreCase("none")){
+            errorMessages.add("Month has not been defined");
         }
     }
 
@@ -540,6 +555,12 @@ class DaftarPustaka {
         if(!inclusive_page.equalsIgnoreCase("none")) {
             isMissing = false;
         }
+        if(!month.equalsIgnoreCase("none")){
+            isMissing = false;
+        }
+        if(!inclusive_page.equalsIgnoreCase("none")) {
+            isMissing = false;
+        }
 
         return isMissing;
     }
@@ -570,6 +591,13 @@ class DaftarPustaka {
         if(inclusive_page.equalsIgnoreCase("none")) {
             errorMessages.add("Inclusive page has not been defined");
         }
+        if(!published_date.isSet()){
+            errorMessages.add("Published date has not been defined");
+        }
+        if(month.equalsIgnoreCase("none")){
+            errorMessages.add("Month has not been defined");
+        }
+
     }
 
     private boolean isWebsiteMissingAttributes(){
@@ -604,6 +632,9 @@ class DaftarPustaka {
         if(accessed_date.isSet()) {
             isMissing = false;
         }
+        if(url.equalsIgnoreCase("none")){
+            isMissing = false;
+        }
 
         return isMissing;
     }
@@ -636,6 +667,9 @@ class DaftarPustaka {
         }
         if(!accessed_date.isSet()) {
             errorMessages.add("Accessed date has not been defined");
+        }
+        if(url.equalsIgnoreCase("none")){
+            errorMessages.add("Url has not been defined");
         }
     }
 
@@ -746,10 +780,32 @@ class DaftarPustaka {
 
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "get"
-            format "apa"
-            source "magazine"
+            action "add"
+            source "website"
             author "Timoty Pratama"
+
+            //<<Magazine & Newspeper>>
+//            year 2015
+//            inclusive_page "29p"
+//            published_date "20 09 2015"
+//            month "October"
+//            article_title "How to make RPLSD"
+//            periodical_title "Analisa"
+
+            //<<BOOK>>
+//            book_title "RPSD Programming"
+//            year 2015
+//            city "Tangerang"
+//            state "West Java"
+//            publisher "ITB Indonesia"
+
+            //<<Website>>
+//            accessed_date "20 12 2015"
+//            published_date "11 2 2015"
+//            url "http://facebook.com/RsAsdf"
+//            website_title "How to program DSL"
+//            article_title "Easiest way to program DSL #1"
+//            publisher "ITB Indonesia"
             getSQL
         }
     }
@@ -906,6 +962,20 @@ class DaftarPustaka {
                     sqlBuilder.append.(" AND ");
                 }
                 sqlBuilder.append("accessed_date = '").append(accessed_date.toString()).append("'");
+            }
+            if(!authors.isEmpty()){
+                if(noCond){
+                    sqlBuilder.append(" WHERE ");
+                    noCond = false;
+                }
+                else{
+                    sqlBuilder.append.(" AND ");
+                }
+                for(int i = 0;i<authors.size();i++){
+                    sqlBuilder.append(" (Author").append(1 + " = '").append(authors.get(i).getFullname()).append("'");
+                    sqlBuilder.append(" OR Author").append(2 + " = '").append(authors.get(i).getFullname()).append("'");
+                    sqlBuilder.append(" OR Author").append(3 + " = '").append(authors.get(i).getFullname()).append("')");
+                }
             }
 
         }
