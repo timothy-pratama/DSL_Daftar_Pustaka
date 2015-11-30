@@ -746,18 +746,10 @@ class DaftarPustaka {
 
     public static void main(String[] args) {
         DaftarPustaka.make {
-            action "add"
+            action "get"
+            format "apa"
             source "magazine"
-            author "Avin Natawiguna"
             author "Timoty Pratama"
-            article_title "Programming SDX"
-            periodical_title "Newyork times"
-            inclusive_page "20-30"
-            volume_number "2012"
-            issue_number "2015"
-            month "October"
-            year 2015
-            published_date "22 10 2015"
             getSQL
         }
     }
@@ -806,9 +798,13 @@ class DaftarPustaka {
             if(accessed_date.isSet()){
                 sqlBuilder.append(" AND accessed_date = '").append(accessed_date.toString()).append("'");
             }
-//            for(int i =0;o<authors.size();i++){
-//
-//            }
+            if(!authors.isEmpty()){
+                for(int i = 0;i<authors.size();i++){
+                    sqlBuilder.append(" AND (Author").append(1 + " = '").append(authors.get(i).getFullname()).append("'");
+                    sqlBuilder.append(" OR Author").append(2 + " = '").append(authors.get(i).getFullname()).append("'");
+                    sqlBuilder.append(" OR Author").append(3 + " = '").append(authors.get(i).getFullname()).append("')");
+                }
+            }
         }
         else{
             if(!authors.isEmpty()){
