@@ -788,6 +788,11 @@ class DaftarPustaka {
             SQLString = sqlBuilder.toString();
             System.out.println("SQL : "+ SQLString);
         }
+
+        /* Print SQL ke File */
+        PrintWriter printer = new PrintWriter("sql_query.txt");
+        printer.println(SQLString);
+        printer.close();
     }
 
     public String ConditionalHandler(){

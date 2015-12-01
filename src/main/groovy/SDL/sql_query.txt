@@ -1,0 +1,1 @@
+SELECT apa FROM referensi WHERE source = 'magazine' AND (Author1 = 'Timoty Pratama' OR Author2 = 'Timoty Pratama' OR Author3 = 'Timoty Pratama');
