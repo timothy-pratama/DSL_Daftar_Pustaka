@@ -1,1 +1,1 @@
-SELECT apa FROM referensi WHERE source = 'website' AND website_title LIKE '%How to program DSL%' AND article_title LIKE '%Easiest way to program DSL #1%' AND publisher LIKE '%ITB Indonesia%' AND published_date = '2015-2-11' AND accessed_date = '2015-12-20' AND (Author1 = 'Timoty Pratama' OR Author2 = 'Timoty Pratama' OR Author3 = 'Timoty Pratama') AND url = 'http://facebook.com/RsAsdf';
+SELECT apa FROM referensi WHERE source = 'magazine' AND (Author1 = 'Timoty Pratama' OR Author2 = 'Timoty Pratama' OR Author3 = 'Timoty Pratama');
