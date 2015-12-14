@@ -856,7 +856,7 @@ class DaftarPustaka {
                 }
             }
             if(!url.equalsIgnoreCase("none")){
-                sqlBuilder.append(" AND url = '").append(url.append("'"));
+                sqlBuilder.append(" AND url = '").append(url).append("'");
             }
 
         }

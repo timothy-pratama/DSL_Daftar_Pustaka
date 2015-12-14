@@ -2,7 +2,7 @@ package SDL
 
 DaftarPustaka.make {
     action "get"
-    source "magazine"
+    source "website"
     format "apa"
     author "Timoty Pratama"
 
@@ -22,12 +22,12 @@ DaftarPustaka.make {
 //            publisher "ITB Indonesia"
 //
     //<<Website>>
-//    accessed_date "20 12 2015"
-//    published_date "11 2 2015"
-//    url "http://facebook.com/RsAsdf"
-//    website_title "How to program DSL"
-//    article_title "Easiest way to program DSL #1"
-//    publisher "ITB Indonesia"
+    accessed_date "20 12 2015"
+    published_date "11 2 2015"
+    url "http://facebook.com/RsAsdf"
+    website_title "How to program DSL"
+    article_title "Easiest way to program DSL #1"
+    publisher "ITB Indonesia"
 
 //    //<<Journal>>
 //    year 2015
